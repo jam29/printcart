@@ -1,11 +1,11 @@
 // Kerawen © Juillet 2017. (Cavarec JB).
-// Relais node pour impression d'étiquettes (raspberryPi->epson étiquettes).
+// Relais node pour impression de tickets (raspberryPi -> epson tickets).
 // ➠ Détection adresse MAC et transformation (uppercase + trim ":")
 // ➠ Connection socket au serveur node screen.kerawen.com:3040 
 // ➠ enregistrement dans la table liaison macAddress:socketId 
 // ➠  Attente de l'évènement d'impression "printkbox" avec les données
 // ➠  Requête http vers le serveur php local pour impression  
-//--------------------------------------------------------------------
+//----------------------------------------------------------------------
 var io = require('socket.io-client');
 var request = require('request');
 var changeCase = require("change-case");
