@@ -20,12 +20,10 @@ require('getmac').getMac(function(err,macAddress){
     // var socket = io.connect('http://screen.kerawen.com:3040', { reconnect: true });
 
     socket.on('connect', function() { 
-        console.log('Connection ',MACADDRESS);
         socket.emit("enreg_mac", MACADDRESS ) ;
     })
 
     socket.on("printkbox",function(data,fn){
-    console.log(data);
     var data2 = JSON.parse(data);
     request({
       url:"http://127.0.0.1",
@@ -34,7 +32,7 @@ require('getmac').getMac(function(err,macAddress){
       body:data2
      }, function(error,response,body) {
       if (error) { fn('ERREUR:',error); }
-        fn(response.body);
+        fn(response);
     });
   });
 })
