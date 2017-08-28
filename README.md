@@ -2,23 +2,20 @@
 
 sudo npm install forever -g 
 
-# Créer un repertoire print dans /home/pi et se positionner dans ce répertoire 
+# Se placer dans /home/pi 
 
 cd /home/pi
-
-mkdir print
-
-cd print
 
 #  cloner l'appli node 
 
 git clone https://github.com/jam29/printcart.git
 
+# installer les packages
+
 npm install
-
-/usr/local/bin/forever start -o /home/pi/print/logs/out.log -e /home/pi/print/logs/err.log /home/pi/print/app.js -p /home/pi/print
-
 
 # Rajouter dans /etc/rc.local
 
-/usr/local/bin/forever start -o /home/pi/print/logs/out.log -e /home/pi/print/logs/err.log /home/pi/print/app.js -p /home/pi/print
+/usr/local/bin/forever start -o /home/pi/printcart/logs/out.log -e /home/pi/printcar/logs/err.log /home/pi/printcart/app.js -p /home/pi/printcart
+
+# rebooter
