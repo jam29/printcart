@@ -30,3 +30,8 @@ npm install
 /usr/local/bin/forever start /home/pi/printcart/app.js -p /home/pi/printcart 
 
 # rebooter
+
+# vérifier le process
+
+sudo forever list
+
