@@ -1,5 +1,3 @@
-
-
 # installer node
 
 sudo wget https://nodejs.org/dist/latest/node-v8.4.0-linux-armv7l.tar.gz
@@ -29,10 +27,6 @@ npm install
 
 # Rajouter dans /etc/rc.local
 
-/usr/local/bin/forever start /home/pi/printcart/app.js -p /home/pi/printcart -o /home/pi/printcart/logs/out.log -e /home/pi/printcart/logs/err.log
+/usr/local/bin/forever start /home/pi/printcart/app.js -p /home/pi/printcart 
 
 # rebooter
-
-#vérifier que le process est lancé
-
-forever list
