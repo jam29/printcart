@@ -80,7 +80,7 @@ sudo forever list
 
 # Afficheur
 
-* lancement de chromium and mode kiosk avec l'url:
+* lancement de chromium en mode kiosk avec l'url:
 
 
 ```
