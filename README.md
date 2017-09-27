@@ -32,6 +32,7 @@ git clone https://github.com/jam29/printcart.git
 # installer les packages
 
 ```
+cd /home/pi/printcart
 npm install
 ```
 
@@ -75,6 +76,14 @@ exit 0
 
 ```
 sudo forever list
+```
+
+Donne une réponse du type:
+
+```
+info:    Forever processes running
+data:        uid  command             script                                          forever pid  id logfile                 uptime       
+data:    [0] 77z5 /usr/local/bin/node /home/pi/printcart/app.js -p /home/pi/printcart 941     1103    /root/.forever/77z5.log 0:0:40:33.64 
 ```
 
 
