@@ -35,3 +35,44 @@ npm install
 
 sudo forever list
 
+
+# Afficheur
+
+* lancement de chromium and mode kiosk avec l'url:
+
+cd /home/pi
+
+cd .config
+
+cd autostart
+
+créer un fichier (ex: auto-chrome.desktop) et insérer ces paramètres 
+
+[Desktop Entry]
+
+Type=Application
+
+Exec=/usr/bin/chromium-browser --noerrdialogs --disable-session-crashed-bubble --disable-infobars --kiosk https://screen.kerawen.com:3030/mag/See-gTlFoaB9r4KQVU_E
+
+Hidden=false
+
+X-GNOME-Autostart-enabled=true
+
+Name[en_US]=AutoChromium
+
+Name=AutoChromium
+
+* stopper screensaver
+
+Ouvrir :
+
+/etc/lightdm/lightdm.conf
+
+Chercher :
+
+#xserver-command=X
+
+Remplacer par :
+
+xserver-command=X -s 0 -dpms
+
