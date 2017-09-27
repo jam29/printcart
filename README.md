@@ -93,9 +93,7 @@ data:    [0] 77z5 /usr/local/bin/node /home/pi/printcart/app.js -p /home/pi/prin
 
 
 ```
-cd /home/pi
-cd .config
-cd autostart
+cd /home/pi/.config/autostart
 
 ```
 
