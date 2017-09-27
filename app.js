@@ -24,7 +24,7 @@ require('getmac').getMac(function(err,macAddress){
     socket2.on('connect', function() { 
         socket2.emit("urlraspberry",MACADDRESS,function(data){ 
              console.log(data);
-             fs.writeFile('/home/pi/urll',data.url_longue,function(err){ })
+             fs.writeFile('/home/pi/printcart/urll',data.url_longue,function(err){ })
         })
     })
 
