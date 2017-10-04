@@ -23,8 +23,11 @@ require('getmac').getMac(function(err,macAddress){
 
     socket2.on('connect', function() { 
         socket2.emit("urlraspberry",MACADDRESS,function(data){ 
-             console.log(data);
-             fs.writeFile('/home/pi/printcart/urll',data.url_longue,function(err){ })
+             if ( typeof query !== 'undefined' && query ) {
+             	fs.writeFile('/home/pi/printcart/urll',data.url_longue,function(err) { } )
+             } else {
+             	fs.writeFile('/home/pi/printcart/urll',"err404",function(err) { } )
+	     }
         })
     })
 

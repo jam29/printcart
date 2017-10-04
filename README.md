@@ -1,7 +1,7 @@
 # installer node
 
 ```
-sudo wget https://nodejs.org/dist/latest/node-v8.4.0-linux-armv7l.tar.gz
+sudo wget https://nodejs.org/dist/v8.4.0/node-v8.4.0-linux-armv7l.tar.gz
 
 sudo tar xvf node-v8.4.0-linux-armv7l.tar.gz
 
@@ -93,11 +93,11 @@ data:    [0] 77z5 /usr/local/bin/node /home/pi/printcart/app.js -p /home/pi/prin
 
 
 ```
-cd /home/pi/.config/autostart
+sudo nano /home/pi/.config/autostart/auto-chrome.desktop
 
 ```
 
-créer un fichier (ex: auto-chrome.desktop) et insérer ces paramètres 
+Insérer ces paramètres 
 
 ```
 [Desktop Entry]
