@@ -6,30 +6,38 @@
 // ➠ enregistrement dans la table liaison macAddress:socketId 
 // ➠  Attente de l'évènement d'impression "printkbox" avec les données
 // ➠  Requête http vers le serveur php local pour impression  
+// Septembre 2017
 // ➠  Ajout generation automatique de l'url afficheur 
-// 
+// Decembre 2017
+// ➠  Ajout impression étiquettes dymo (pdf) 
+// Janvier 2018
+// ➠  Ajout impression étiquettes zebra (zpl) 
 //----------------------------------------------------------------------
 var io = require('socket.io-client');
 var request = require('request');
 var changeCase = require('change-case');
 var fs = require('fs-extra');
+var exec = require("child_process");
+var Readable = require('stream').Readable;
+var spawn = require('child_process').spawn
 
 require('getmac').getMac(function(err,macAddress){
   if (err)  throw err
     var MACADDRESS = changeCase.upperCase(macAddress).replace(/:/g, '');
-    console.log(MACADDRESS);
-  var socket  = io.connect('https://screen.kerawen.com:3050', { secure: true, rejectUnauthorized: false,reconnect: true});
+    console.log("I AM KBOX:",MACADDRESS);
+
+  //var socket  = io.connect('https://screen.kerawen.com:3050', { secure: true, rejectUnauthorized: false,reconnect: true});
+  var socket  = io.connect('http://screen.kerawen.com:3040');
   var socket2  = io.connect('https://screen.kerawen.com:3030', { secure: true, rejectUnauthorized: false,reconnect: true});
 
   socket2.on('connect', function() { 
     socket2.emit("urlraspberry",MACADDRESS,function(data){ 
-console.log('DaTa:',data);
       fs.writeFile('/home/pi/printcart/urll',data.url_longue,function(err) { } )
     })
   })
 
-    // version http
-    // var socket = io.connect('http://screen.kerawen.com:3040', { reconnect: true });
+  // version http
+  // var socket = io.connect('http://screen.kerawen.com:3040', { reconnect: true });
 
     socket.on('connect', function() { 
       console.log("emit enreg_mac:",MACADDRESS) ;
@@ -49,11 +57,27 @@ console.log('DaTa:',data);
       });
     });
 
-    
-    socket.on("printlabelkbox",function(data,pdf,fn){
-       console.log("DATA:",data);
-       console.log("PDF:",pdf);
-    });
+    socket.on("printkboxlabel",function(params,data,fn){
+     //var d2p = JSON.parse(data.data2print);
+     var args = JSON.parse(params);
 
+     console.log(data);
+
+ 
+     var lp = spawn('/usr/bin/lpr',['-o raw ', '-P'+args.printer]);
+
+     // let stream = new Readable() ;
+     // stream.push('! U1 setvar "device.languages" "zpl"\n');
+     // stream.push(d2p);
+     // stream.push('\n');
+     // stream.push(null);
+     // stream.pipe(lp.stdin);
+     // stream.pipe(process.stdout);
+
+     lp.stdin.write(data.data2print);
+     lp.stdin.write("\n");
+     lp.stdin.end();
+
+    });
 
   })
