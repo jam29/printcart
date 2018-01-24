@@ -18,6 +18,7 @@ var request = require('request');
 var changeCase = require('change-case');
 var fs = require('fs-extra');
 var exec = require("child_process");
+var Duplex = require('stream').Duplex;
 var spawn = require('child_process').spawn
 
 require('getmac').getMac(function(err,macAddress){
@@ -58,18 +59,24 @@ require('getmac').getMac(function(err,macAddress){
 
    socket.on("printkboxlabel",function(params,data,fn) {
 
+    var d2p  = data.data2print; 
     var args = JSON.parse(params);
 
     var raw = "";
-    if (data.lpraw == 1 ) { raw='-o raw' };
+    if (data.lpraw == 1 ) { raw=" -o raw " };
+    console.log(args.printer);
+    var lp = spawn('/usr/bin/lpr',[' -o raw ','-P'+args.printer]);
 
-    console.log("print label on ",args.printer);
-  
-    // var lp = spawn('/usr/bin/lpr',['-o raw','-P'+args.printer]);
-    var lp = spawn('/usr/bin/lpr',[raw,'-P'+args.printer]);
+/*
+    let stream = new Duplex() ;
+    stream.push("string");
+    stream.push("\n");
+    stream.push(null);
+    stream.pipe(lp.stdin);
+*/
 
-    lp.stdin.write(data.data2print);
-    lp.stdin.write('\n');
+    lp.stdin.write(d2p);
+    lp.stdin.write("\n");
     lp.stdin.end();
 
     });

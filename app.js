@@ -49,7 +49,6 @@ console.log('DaTa:',data);
       });
     });
 
-    
     socket.on("printlabelkbox",function(data,pdf,fn){
        console.log("DATA:",data);
        console.log("PDF:",pdf);
