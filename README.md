@@ -1,4 +1,4 @@
-# installer node
+# installer node raspberry
 
 ```
 sudo wget https://nodejs.org/dist/v8.4.0/node-v8.4.0-linux-armv7l.tar.gz
