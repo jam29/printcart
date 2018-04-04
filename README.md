@@ -39,7 +39,8 @@ npm install
 # Rajouter dans /etc/rc.local
 
 ```
-/usr/local/bin/forever start /home/pi/printcart/app.js -p /home/pi/printcart > /tmp/errFileForever 2>&1
+/usr/local/bin/forever start /home/pi/printcart/appticket.js -p /home/pi/printcart > /tmp/errFileForever 2>&1
+/usr/local/bin/forever start /home/pi/printcart/applabel.js -p /home/pi/printcart > /tmp/errFileForever2 2>&1
 ```
 
 Exemple de fichier rc.local:
@@ -64,7 +65,8 @@ if [ "$_IP" ]; then
   printf "My IP address is %s\n" "$_IP"
 fi
 
-/usr/local/bin/forever start /home/pi/printcart/app.js -p /home/pi/printcart > /tmp/errFileForever 2>&1
+/usr/local/bin/forever start /home/pi/printcart/appticket.js -p /home/pi/printcart > /tmp/errFileForever 2>&1
+/usr/local/bin/forever start /home/pi/printcart/applabel.js -p /home/pi/printcart > /tmp/errFileForever2 2>&1
 
 exit 0
 ```
@@ -93,6 +95,7 @@ data:    [0] 77z5 /usr/local/bin/node /home/pi/printcart/app.js -p /home/pi/prin
 
 
 ```
+mkdir /home/pi/.config/autostart
 sudo nano /home/pi/.config/autostart/auto-chrome.desktop
 
 ```
@@ -129,4 +132,4 @@ Remplacer par :
 ```
 xserver-command=X -s 0 -dpms
 ```
-
+Reboot
