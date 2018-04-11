@@ -34,6 +34,8 @@ require('getmac').getMac(function(err,macAddress){
  
     var lp = spawn('/usr/bin/lpr', ['-P'+argz.printer, '-#'+data.copies]);
 
+    exec.exec(`/usr/sbin/cupsenable ${argz.printer}`);
+
     if (data.lpraw == 1 ) { 
       lp = spawn('/usr/bin/lpr', ['-o raw','-P'+argz.printer, '-#'+data.copies]);
     }
