@@ -133,3 +133,26 @@ Remplacer par :
 xserver-command=X -s 0 -dpms
 ```
 Reboot
+
+
+Lien symbolique pour associer n'importe quel /dev/usb/lp* à une imprimante
+
+Rajouter dans /etc/udev/rules.d/60-persistent-printer.rules
+
+ACTION=="remove", GOTO="persistent_printer_end"
+
+# This should not be necessary
+#KERNEL!="lp*", GOTO="persistent_printer_end"
+
+SUBSYSTEMS=="usb", IMPORT{builtin}="usb_id"
+ENV{ID_TYPE}!="printer", GOTO="persistent_printer_end"
+
+ENV{ID_SERIAL}=="?*", SYMLINK+="lp/by-id/$env{ID_BUS}-$env{ID_SERIAL}"
+
+IMPORT{builtin}="path_id"
+ENV{ID_PATH}=="?*", SYMLINK+="lp/by-path/$env{ID_PATH}"
+
+LABEL="persistent_printer_end"
+
+
+# udevadm control --reload-rules && udevadm trigger
