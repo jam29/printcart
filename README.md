@@ -160,3 +160,31 @@ LABEL="persistent_printer_end"
 
  # udevadm control --reload-rules && udevadm trigger
  # modifer variable LP dans /var/www/html/config.php , exemple : define('LP', '/dev/lp/by-id/usb-EPSON_TM-T20II_544338590809750000'); 
+
+
+# --(o)-- Afficheur oxhoo 
+
+Lenovo LT1421 USB DisplayLink monitor on a RaspberryPi
+
+I created a file named 60-plugable.conf in the /usr/share/X11/xorg.conf.d directory with the following content:
+ /usr/share/X11/xorg.conf.d/60-plugable.conf
+Section "Device" 
+  Identifier "uga" 
+  driver "fbdev" 
+  Option "fbdev" "/dev/fb1" 
+  Option "ShadowFB" "off"
+EndSection 
+Section "Monitor" 
+  Identifier "monitor" 
+EndSection 
+Section "Screen" 
+  Identifier "screen" 
+  Device "uga" 
+  Monitor "monitor" 
+EndSection 
+Section "ServerLayout" 
+  Identifier "default" 
+  Screen 0 "screen" 0 0 
+EndSection
+
+
