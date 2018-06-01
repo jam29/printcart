@@ -159,3 +159,6 @@ LABEL="persistent_printer_end"
 
 
  # udevadm control --reload-rules && udevadm trigger
+ # modifer variable LP dans /var/www/html/config.php , exemple : define('LP', '/dev/lp/by-id/usb-EPSON_TM-T20II_544338590809750000'); 
+B
+ # modifier la variable LP dans 
