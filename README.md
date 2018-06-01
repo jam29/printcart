@@ -134,9 +134,9 @@ xserver-command=X -s 0 -dpms
 ```
 Reboot
 
-```
+Creation lien symbolique imprimante 
 
-# creation lien symbolique imprimante 
+```
 
 Lien symbolique pour associer n'importe quel /dev/usb/lp* à une imprimante
 
