@@ -18,7 +18,7 @@ require('getmac').getMac(function(err,macAddress){
     var MACADDRESS = changeCase.upperCase(macAddress).replace(/:/g, '');
     console.log("I AM KBOX:",MACADDRESS);
 
-    var socket = io.connect('https://screen.kerawen.com:3055', { secure: true, rejectUnauthorized: false,reconnect: true});
+    var socket = io.connect('https://screen.kerawen.com:3075', { secure: true, rejectUnauthorized: false,reconnect: true});
 
     socket.on('connect', function() { 
       socket.emit("enreg_mac", MACADDRESS ) ;
@@ -45,7 +45,7 @@ require('getmac').getMac(function(err,macAddress){
     lp.stdin.write(dc);
     lp.stdin.write('\n');
     lp.stdin.end();
-
+fn();
 /*
     fs.writeFile('testout.pdf', dc , function (err) {
         if (err) throw err

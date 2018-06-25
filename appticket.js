@@ -23,7 +23,14 @@ var socket2  = io.connect('https://screen.kerawen.com:3030', { secure: true, rej
 
 socket2.on('connect', function() { 
     socket2.emit("urlraspberry",MACADDRESS,function(data){ 
+
+if(data) {
       fs.writeFile('/home/pi/printcart/urll',data.url_longue,function(err) { } )
+} else {
+	console.log("pas de MACADDRESS dans la table push");
+	console.log("ineccessaire si écran affichage connecté à KBOX");
+}
+
     })
   })
 

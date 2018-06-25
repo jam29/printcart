@@ -188,3 +188,13 @@ Section "ServerLayout"
 EndSection
 
 
+
+
+
+
+voir toutes les taches cups:
+lpstat -o
+supprimer toutes les taches d'une imprimante
+cancel -a {printer}
+exemple : cancel -a zebra 
+
