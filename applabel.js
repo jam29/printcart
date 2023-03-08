@@ -1,11 +1,13 @@
-//----------------------------------------------------------------------
+//-------------------------------------------------------------------------------------------------
 // Kerawen © Juillet 2017. (Cavarec JB).
 // Relais node pour impression de labels (raspberryPi -> zebra,dymo...etc...).
 // ➠ Détection adresse MAC et transformation (uppercase + trim ":")
 // ➠ Connection socket au serveur node screen.kerawen.com:3055 
 // ➠ enregistrement dans la table liaison macAddress:socketId 
 // ➠  Attente de l'évènement d'impression "printkboxlabel" avec les données
-//----------------------------------------------------------------------
+// - modification 26Aout2021: envoi directement le fichier ZPL aux ZEBRAs et passe par cups pour les pdf (dymo)
+//--------------------------------------------------------------------------------------------------
+require('dotenv').config(); 
 var io = require('socket.io-client');
 var request = require('request');
 var changeCase = require('change-case');
@@ -24,7 +26,7 @@ require('getmac').getMac(function(err,macAddress){
       socket.emit("enreg_mac", MACADDRESS ) ;
     })
 
-   socket.on("printkboxlabel",function(params,data,fn) {
+   socket.on("printkboxlabel",function(params,data,callback) {
     var argz = JSON.parse(params);
 
     console.log("print label on:",argz.printer);
@@ -32,26 +34,27 @@ require('getmac').getMac(function(err,macAddress){
     console.log("raw:",data.lpraw);
     console.log("copies:",data.copies);
  
-    var lp = spawn('/usr/bin/lpr', ['-P'+argz.printer, '-#'+data.copies]);
-
-    exec.exec(`/usr/sbin/cupsenable ${argz.printer}`);
-
-    if (data.lpraw == 1 ) { 
-      lp = spawn('/usr/bin/lpr', ['-o raw','-P'+argz.printer, '-#'+data.copies]);
+    if (data.lpraw == 0 ) { 
+        var lp = spawn('/usr/bin/lp', ['-d'+argz.printer, '-n'+data.copies]);
+        exec.exec(`/usr/sbin/cupsenable ${argz.printer}`);
+        var dc = data.data2print
+        lp.stdin.write(dc);
+        lp.stdin.write('\n');
+        lp.stdin.end();
+        callback();
     }
 
-    var dc =  data.data2print ;
+    if (data.lpraw == 1 ) { 
+	var argz = JSON.parse(params);
+   	var dc = data.data2print.replace(/&#39;/g,"\'" ).replace(/&#34;/g, "\"").replace(/&amp;/g,"\&")
+   	console.log(dc);  
+   	for (var i=0 ; i < data.copies ; i++ ) {
+        	console.log ('/dev/lp/by-id/'+process.env.ZEBRA,dc)
+        	fs.writeFileSync('/dev/lp/by-id/usb-Zebra_Technologies_ZTC_ZD421-203dpi_ZPL_D8J213005052',dc)
+   	}
+   	callback();
+    }
 
-    lp.stdin.write(dc);
-    lp.stdin.write('\n');
-    lp.stdin.end();
-fn();
-/*
-    fs.writeFile('testout.pdf', dc , function (err) {
-        if (err) throw err
-                console.log('created testout.pdf')
-    })
-*/
+    }); // fin socket.on("printkboxlabel....
 
-    });
-  })
+}) // fin require.getMac 

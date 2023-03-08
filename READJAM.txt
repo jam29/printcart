@@ -1,0 +1,3 @@
+
+sudo grep ClientID /etc/teamviewer/global.conf | awk -F' ' '{ print $NF }'
+sudo teamviewer passwd kerdrawer201

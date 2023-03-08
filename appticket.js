@@ -28,17 +28,16 @@ if(data) {
       fs.writeFile('/home/pi/printcart/urll',data.url_longue,function(err) { } )
 } else {
 	console.log("pas de MACADDRESS dans la table push");
-	console.log("ineccessaire si écran affichage connecté à KBOX");
+	console.log("necessaire si écran affichage connecté à KBOX");
 }
-
     })
   })
 
-    socket.on('connect', function() { 
+  socket.on('connect', function() { 
       console.log("emit enreg_mac:",MACADDRESS) ;
       console.log("SID:",socket.id) ;
       socket.emit("enreg_mac", MACADDRESS ) ;
-    })
+  })
 
    socket.on("printkbox",function(data,fn){
       var data2 = JSON.parse(data);
@@ -49,7 +48,8 @@ if(data) {
         body:data2
       }, function(error,response,body) {
         if (error) { fn('ERREUR:',error); }
-        fn(response);
+        //fn(response.body);
+	else fn(body);
       });
    });
 
