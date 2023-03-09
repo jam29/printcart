@@ -15,7 +15,6 @@
     "express": "^4.16.3",
     "fs-extra": "^4.0.1",
     "getmac": "^1.2.1",
-    "jade": "~1.11.0",
     "morgan": "^1.9.0",
     "request": "^2.87.0",
     "serve-favicon": "^2.5.0",
